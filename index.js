@@ -1,6 +1,7 @@
 const TikTokScraper = require("tiktok-scraper");
 const http = require("http");
 const url = require("url");
+const fs = require("fs");
 http.createServer(runServer).listen(300);
 async function runServer(request, resp) {
     var u = url.parse(request.url, true);
@@ -164,7 +165,8 @@ async function runServer(request, resp) {
                 })
                 resp.end(d);
             }
-            
+        } else if (path_parsed[2] == "") {
+
         } else {
             var d = JSON.stringify({
                 "err": "invalidEndpoint"
@@ -175,5 +177,77 @@ async function runServer(request, resp) {
             })
             resp.end(d);
         }
+    } else {
+        fs.readFile("./web-content/" + path, function(err, res) {
+            if (err) {
+                if (err.code == "EISDIR") {
+                    fs.readFile("./web-content/" + path + "/index.html", function(err, res) {
+                        if (err) {
+                            if (err.code == "ENOENT") {
+                                fs.readFile("./error/404.html", function(err, res) {
+                                    if (err) {
+                                        resp.end("see console for errors");
+                                        console.log("incomplete installation has occured.")
+                                    } else {
+                                        resp.writeHead(404, {
+                                            "Access-Control-Allow-Origin": "*",
+                                            "Content-Type": "text/html"
+                                        })
+                                        resp.end(res);
+                                    }
+                                })
+                            }
+                        } else {
+                            resp.writeHead(200, {
+                                "Access-Control-Allow-Origin": "*",
+                                "Content-Type": "text/html"
+                            })
+                            resp.end(res);
+                        }
+                    })
+                } else if (err.code == "ENOENT") {
+                    fs.readFile("./error/404.html", function(err, res) {
+                        if (err) {
+                            resp.end("see console for errors");
+                            console.log("incomplete installation has occured.")
+                        } else {
+                            resp.writeHead(404, {
+                                "Access-Control-Allow-Origin": "*",
+                                "Content-Type": "text/html"
+                            })
+                            resp.end(res);
+                        }
+                    })
+                } else {
+                    resp.end("please report this error to the developers - " + err.code);
+                }
+            } else {
+                var fileType = path.split(".")[path.split(".").length - 1];
+                if (fileType == "html") {
+                    resp.writeHead(200, {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "text/html"
+                    })
+                    resp.end(res);
+                } else if (fileType == "js") {
+                    resp.writeHead(200, {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "application/javascript"
+                    })
+                    resp.end(res);
+                } else if (fileType == "css") {
+                    resp.writeHead(200, {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "text/css"
+                    })
+                    resp.end(res);
+                } else {
+                    resp.writeHead(200, {
+                        "Access-Control-Allow-Origin": "*"
+                    })
+                    resp.end(res);
+                }
+            }
+        })
     }
 }
