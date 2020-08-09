@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Wire</title>
+        <link href="/css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="sidebar">
+            <a href="/"><h1><span class="material-icons">power</span> Wire</h1></a>
+            <p>A privacy friendly client of Tiktok. No logging is ever done or kept.</p>
+        </div>
+        <div id="load">
+            Loading...
+        </div>
+        <div id="page" style="display:none">
+            <video id="player" autoplay loop controls></video>
+            <div>
+                <a id="authLink"><h2><span class="material-icons">person</span> <span id="auth" class="hover"></span></h2></a>
+                <a id="musiLink"><h2><span class="material-icons">headset</span> <span id="musi" class="hover"></span></h2></a>
+                <h2><span class="material-icons">date_range</span> posted on <span id="pub"></span></h2>
+                <h2><span class="material-icons">visibility</span> <span id="vi"></span> views</h2>
+                <h2><span class="material-icons">thumb_up</span> <span id="li"></span> likes</h2>
+                <h2><span class="material-icons">reply</span> <span id="sh"></span> shares</h2>
+                <p id="content"></p>
+            </div>
+        </div>
+        <div id="err" style="display:none;">
+            <h2><span class="material-icons">error</span> <span id="errTxt"></span></h2>
+        </div>
+        <script src="/post/index.js"></script>
+    </body>
+</html>

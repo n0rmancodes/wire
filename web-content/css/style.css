@@ -1,5 +1,109 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.material-icons {
+    vertical-align: text-bottom;
+}
+
+h1 .material-icons {
+    font-size:36px;
+}
+
 html, body {
     font-family:Arial;
     color:white;
     background:black;
+}
+
+a {
+    color:white;
+    text-decoration: none;
+}
+
+.hover:hover {
+    text-decoration: underline;
+}
+
+#sidebar {
+    width:300px;
+    float:left;
+    background:#282828;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    margin:0;
+}
+
+#sidebar h1 {
+    margin:4%;
+}
+
+#sidebar p {
+    margin-left:4%;
+    margin-right:4%;
+}
+
+#home, #page, #load, #err, #profile {
+    margin-left:300px;
+}
+
+.feedTitle {
+    font-family:Verdana;
+    margin-left:1%;
+    margin-right:0;
+    margin-bottom:0;
+    margin-top:0;
+}
+
+#feed div {
+    margin:1%;
+    width:96%;
+    padding:1%;
+    background:#282828;
+    height:480px;
+}
+
+#feed div img {
+    width:240px;
+    height:480px;
+    object-fit:cover;
+    float:left;
+}
+
+#feed div .infoBox {
+    margin-left:.5%;
+    float:left;
+    max-width:75%;
+    margin-top:0;
+    margin-bottom:0;
+    margin-right:0;
+    padding:0;
+    background:transparent;
+}
+
+.infoBox * {
+    margin:0;
+}
+
+#page video {
+    max-height:500px;
+}
+
+#page div, #page video {
+    float:left;
+    width:50%;
+}
+
+#page div, #page div *, #profileMod * {
+    margin:0;    
+}
+
+#profileMod img, #profileMod div {
+    float: left;
+}
+
+#profileMod img {
+    width:140px;
+    height:140px;
+    margin-right:5px;
 }

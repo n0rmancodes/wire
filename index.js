@@ -131,13 +131,11 @@ async function runServer(request, resp) {
             try {
                 if (path_parsed[3]) {
                     var music = await TikTokScraper.music(path_parsed[3], {number: 100});
-                    var name = music.collector[0].musicMeta.musicName;
-                    if (name.includes(" ")) {
-                        name = name.replace(" ", "-");
+                    if (music.collector[0]) {
+                        var musicInfo = music.collector[0].musicMeta;
+                    } else {
+                        var musicInfo = {};
                     }
-                    var id = music.collector[0].musicMeta.musicId;
-                    var musicUrl = "https://tiktok.com/music/" + name + "-" + id;
-                    var musicInfo = await TikTokScraper.getMusicInfo(musicUrl)
                     var d = JSON.stringify({music, musicInfo});
                     resp.writeHead(200, {
                         "Content-Type": "application/json",
@@ -165,8 +163,6 @@ async function runServer(request, resp) {
                 })
                 resp.end(d);
             }
-        } else if (path_parsed[2] == "") {
-
         } else {
             var d = JSON.stringify({
                 "err": "invalidEndpoint"
@@ -177,6 +173,32 @@ async function runServer(request, resp) {
             })
             resp.end(d);
         }
+    } else if (path_parsed[1].substring(0, 1) == "@" && path_parsed[2] == "video") {
+        fs.readFile("./web-content/post/index.html", function(err,res) {
+            if (err) {
+                resp.end("see console for errors");
+                console.log("incomplete installation has occured.")
+            } else {
+                resp.writeHead(200, {
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": "text/html"
+                })
+                resp.end(res);
+            }
+        })
+    } else if (path_parsed[1].substring(0, 1) == "@") {
+        fs.readFile("./web-content/creator/index.html", function(err,res) {
+            if (err) {
+                resp.end("see console for errors");
+                console.log("incomplete installation has occured.")
+            } else {
+                resp.writeHead(200, {
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": "text/html"
+                })
+                resp.end(res);
+            }
+        })
     } else {
         fs.readFile("./web-content/" + path, function(err, res) {
             if (err) {
