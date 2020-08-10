@@ -40,6 +40,7 @@ function load() {
             document.getElementById("li").innerHTML = json.diggCount.toLocaleString();
             document.getElementById("sh").innerHTML = json.shareCount.toLocaleString();
             document.getElementById("content").innerHTML = json.text;
+            document.title = json.text + " | Wire";
         } else {
             document.getElementById("err").style.display = "";
             document.getElementById("load").style.display = "none";

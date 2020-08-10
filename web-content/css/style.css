@@ -107,3 +107,19 @@ a {
     height:140px;
     margin-right:5px;
 }
+
+#profileMod, #feed {
+    width:100%;
+    min-height:140px;
+}
+
+#profileMod {
+    margin-bottom:1%;
+}
+
+#profile #feed img {
+    width:200px;
+    height:355px;
+    object-fit:cover;
+    margin:1%;
+}

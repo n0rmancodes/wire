@@ -16,6 +16,15 @@ function load() {
             document.getElementById("followingCount").innerHTML = parseInt(json.user.following).toLocaleString();
             document.getElementById("totalLikes").innerHTML = parseInt(json.user.heart).toLocaleString();
             document.getElementById("authPfp").src = json.user.coversMedium[0];
+            document.title = json.user.uniqueId + " | Wire";
+            for (var c in json.video.collector) {
+                var link = document.createElement("A");
+                link.href = json.video.collector[c].webVideoUrl.split("https://www.tiktok.com")[1];
+                var img = document.createElement("IMG");
+                img.src = json.video.collector[c].covers.origin;
+                link.appendChild(img);
+                document.getElementById("feed").appendChild(link);
+            }
         } else {
             document.getElementById("load").style.display = "none";
             document.getElementById("err").style.display = "";
