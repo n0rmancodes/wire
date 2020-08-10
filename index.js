@@ -2,7 +2,7 @@ const TikTokScraper = require("tiktok-scraper");
 const http = require("http");
 const url = require("url");
 const fs = require("fs");
-http.createServer(runServer).listen(300);
+http.createServer(runServer).listen(process.env.PORT || 300);
 async function runServer(request, resp) {
     var u = url.parse(request.url, true);
     var path = u.pathname;
