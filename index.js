@@ -199,6 +199,47 @@ async function runServer(request, resp) {
                 resp.end(res);
             }
         })
+    } else if (path_parsed[1] == "tune") {
+        if (!path_parsed[2]) {
+            fs.readFile("./error/404.html", function(err, res) {
+                if (err) {
+                    resp.end("see console for errors");
+                    console.log("incomplete installation has occured.")
+                } else {
+                    resp.writeHead(404, {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "text/html"
+                    })
+                    resp.end(res);
+                }
+            })
+        } else if (path_parsed[2] == "index.js") {
+            fs.readFile("./web-content/tune/index.js", function(err,res) {
+                if (err) {
+                    resp.end("see console for errors");
+                    console.log("incomplete installation has occured.");
+                } else {
+                    resp.writeHead(200, {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "application/javascript"
+                    })
+                    resp.end(res);
+                }
+            })
+        } else {
+            fs.readFile("./web-content/tune/index.html", function(err,res) {
+                if (err) {
+                    resp.end("see console for errors");
+                    console.log("incomplete installation has occured.");
+                } else {
+                    resp.writeHead(200, {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "text/html"
+                    })
+                    resp.end(res);
+                }
+            })
+        }
     } else {
         fs.readFile("./web-content/" + path, function(err, res) {
             if (err) {
