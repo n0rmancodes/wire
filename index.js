@@ -2,6 +2,7 @@ const TikTokScraper = require("tiktok-scraper");
 const http = require("http");
 const url = require("url");
 const fs = require("fs");
+const got = require("got");
 http.createServer(runServer).listen(process.env.PORT || 300);
 async function runServer(request, resp) {
     var u = url.parse(request.url, true);
@@ -240,6 +241,32 @@ async function runServer(request, resp) {
                 }
             })
         }
+    } else if (path_parsed[1] == "proxy") {
+        if (path_parsed[2]) {
+            try {
+                var ur = Buffer.from(path_parsed[2], "base64").toString("utf-8");
+                var d = got.stream(ur)
+                d.pipe(resp)
+            } catch (error) {
+                if (error.message) {
+                    resp.writeHead(404, {
+                        "Content-Type": "text/plain"
+                    })
+                    resp.end(error.message);
+                } else {
+                    resp.writeHead(404, {
+                        "Content-Type": "text/plain"
+                    })
+                    resp.end(error);
+                }
+            }
+        } else {
+            resp.writeHead(404, {
+                "Content-Type": "text/plain"
+            })
+            resp.end("must have url");
+        }
+        
     } else {
         fs.readFile("./web-content/" + path, function(err, res) {
             if (err) {
