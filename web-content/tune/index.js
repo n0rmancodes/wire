@@ -11,6 +11,7 @@ function load() {
         document.getElementById("profile").style.display = "";
         document.getElementById("cover").src = json.musicInfo.coverMedium;
         document.getElementById("title").innerHTML = json.musicInfo.musicName;
+        document.title = json.musicInfo.musicName + " | WireTick";
         document.getElementById("authorName").innerHTML = json.musicInfo.musicAuthor;
         for (var c in json.music.collector) {
             var link = document.createElement("A");

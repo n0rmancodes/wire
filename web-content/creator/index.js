@@ -16,7 +16,7 @@ function load() {
             document.getElementById("followingCount").innerHTML = parseInt(json.user.following).toLocaleString();
             document.getElementById("totalLikes").innerHTML = parseInt(json.user.heart).toLocaleString();
             document.getElementById("authPfp").src = json.user.coversMedium[0];
-            document.title = json.user.uniqueId + " | Wire";
+            document.title = json.user.uniqueId + " | WireTick";
             for (var c in json.video.collector) {
                 var link = document.createElement("A");
                 link.href = json.video.collector[c].webVideoUrl.split("https://www.tiktok.com")[1];
