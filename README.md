@@ -1,2 +1,2 @@
-# wire
-Wire is a TikTok alternative client.
+# wiretick
+WireTick is a TikTok alternative client.
