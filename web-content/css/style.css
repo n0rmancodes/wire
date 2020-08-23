@@ -23,103 +23,175 @@ a {
     text-decoration: underline;
 }
 
-#sidebar {
-    width:300px;
-    float:left;
-    background:#282828;
-    height:100%;
-    position:fixed;
-    top:0;
-    left:0;
-    margin:0;
+@media (min-width:915px) {
+    #sidebar {
+        width:300px;
+        float:left;
+        background:#282828;
+        height:100%;
+        position:fixed;
+        top:0;
+        left:0;
+        margin:0;
+    }
+    
+    #sidebar h1 {
+        margin:4%;
+    }
+    
+    #sidebar p {
+        margin-left:4%;
+        margin-right:4%;
+    }
+    
+    #home, #page, #load, #err, #profile {
+        margin-left:300px;
+    }
+    
+    .feedTitle {
+        font-family:Verdana;
+        margin-left:1%;
+        margin-right:0;
+        margin-bottom:0;
+        margin-top:0;
+    }
+    
+    #feed div {
+        margin:1%;
+        width:96%;
+        padding:1%;
+        background:#282828;
+        height:480px;
+    }
+    
+    #feed div img {
+        width:240px;
+        height:480px;
+        object-fit:cover;
+        float:left;
+    }
+    
+    #feed div .infoBox {
+        margin-left:.5%;
+        float:left;
+        max-width:45%;
+        margin-top:0;
+        margin-bottom:0;
+        margin-right:0;
+        padding:0;
+        background:transparent;
+    }
+    
+    .infoBox * {
+        margin:0;
+    }
+    
+    #page video {
+        max-height:500px;
+    }
+    
+    #page div, #page video {
+        float:left;
+        width:50%;
+    }
+    
+    #page div, #page div *, #profileMod * {
+        margin:0;    
+    }
+    
+    #profileMod img, #profileMod div {
+        float: left;
+    }
+    
+    #profileMod img {
+        width:140px;
+        height:140px;
+        margin-right:5px;
+    }
+    
+    #profileMod, #feed {
+        width:100%;
+        min-height:140px;
+    }
+    
+    #profileMod {
+        margin-bottom:1%;
+    }
+    
+    #profile #feed img {
+        width:200px;
+        height:355px;
+        object-fit:cover;
+        margin:1%;
+    }
 }
 
-#sidebar h1 {
-    margin:4%;
-}
+@media (max-width:915px) {
+    #sidebar {
+        text-align:center;
+    }
 
-#sidebar p {
-    margin-left:4%;
-    margin-right:4%;
-}
+    #sidebar p {
+        display:none;
+    }
 
-#home, #page, #load, #err, #profile {
-    margin-left:300px;
-}
+    #page video {
+        width:100%;
+        max-height:480px;
+    }
 
-.feedTitle {
-    font-family:Verdana;
-    margin-left:1%;
-    margin-right:0;
-    margin-bottom:0;
-    margin-top:0;
-}
+    #page h2 {
+        margin:2px;
+    }
 
-#feed div {
-    margin:1%;
-    width:96%;
-    padding:1%;
-    background:#282828;
-    height:480px;
-}
+    #home #feed div {
+        background:#282828;
+        max-height:325px;
+        width:100%;
+        margin-bottom:5px;
+    }
 
-#feed div img {
-    width:240px;
-    height:480px;
-    object-fit:cover;
-    float:left;
-}
+    #home #feed div img {
+        float:left;
+        width:30%;
+        height:320px;
+        object-fit:cover;
+    }
 
-#feed div .infoBox {
-    margin-left:.5%;
-    float:left;
-    max-width:45%;
-    margin-top:0;
-    margin-bottom:0;
-    margin-right:0;
-    padding:0;
-    background:transparent;
-}
+    #home #feed div .infoBox {
+        float:left;
+        height:320px;
+        padding-left:0.5%;
+        width:68.5%;
+    }
 
-.infoBox * {
-    margin:0;
-}
+    #home #feed div .infoBox * {
+        margin:0;
+    }
 
-#page video {
-    max-height:500px;
-}
+    #profile #feed img {
+        width:33%;
+        height:337px;
+        float:left;
+        object-fit:cover;
+    }
 
-#page div, #page video {
-    float:left;
-    width:50%;
-}
+    #profileMod {
+        width:100%;
+        min-height:150px;
+    }
 
-#page div, #page div *, #profileMod * {
-    margin:0;    
-}
-
-#profileMod img, #profileMod div {
-    float: left;
-}
-
-#profileMod img {
-    width:140px;
-    height:140px;
-    margin-right:5px;
-}
-
-#profileMod, #feed {
-    width:100%;
-    min-height:140px;
-}
-
-#profileMod {
-    margin-bottom:1%;
-}
-
-#profile #feed img {
-    width:200px;
-    height:355px;
-    object-fit:cover;
-    margin:1%;
+    #profileMod * {
+        margin:0;    
+    }
+    
+    #profileMod img, #profileMod div {
+        float: left;
+    }
+    
+    #profileMod img {
+        width:140px;
+        height:140px;
+        margin-right:5px;
+    }
 }
