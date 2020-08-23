@@ -11,7 +11,7 @@ function load() {
             link.href = json.collector[c].webVideoUrl.split("https://www.tiktok.com/")[1];
             var div = document.createElement("DIV");
             var img = document.createElement("IMG");
-            img.src = json.collector[c].covers.dynamic;
+            img.src = "/proxy/" + btoa(json.collector[c].covers.dynamic);
             div.appendChild(img);
             var div2 = document.createElement("DIV");
             div2.classList.add("infoBox");

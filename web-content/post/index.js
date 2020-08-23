@@ -11,8 +11,8 @@ function load() {
         if (!json.err) {
             document.getElementById("load").style.display = "none";
             document.getElementById("page").style.display = "";
-            document.getElementById("player").poster = json.imageUrl;
-            document.getElementById("player").src = json.videoUrl;
+            document.getElementById("player").poster = "/proxy/" + btoa(json.imageUrl);
+            document.getElementById("player").src = "/proxy/" + btoa(json.videoUrl);
             document.getElementById("authLink").href = "/@" + json.authorMeta.name;
             document.getElementById("auth").innerHTML = json.authorMeta.name;
             document.getElementById("musiLink").href = "/tune/" + json.musicMeta.musicId;
