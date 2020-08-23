@@ -245,7 +245,12 @@ async function runServer(request, resp) {
         if (path_parsed[2]) {
             try {
                 var ur = Buffer.from(path_parsed[2], "base64").toString("utf-8");
-                var d = got.stream(ur)
+                var d = got.stream(ur).on("error", function(e) {
+                    resp.writeHead(404, {
+                        "Content-Type": "text/plain"
+                    })
+                    resp.end(e.message);
+                })
                 d.pipe(resp)
             } catch (error) {
                 if (error.message) {
