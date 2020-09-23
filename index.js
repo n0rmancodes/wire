@@ -4,6 +4,7 @@ const url = require("url");
 const fs = require("fs");
 const got = require("got");
 http.createServer(runServer).listen(process.env.PORT || 300);
+console.log("- wiretick is running!");
 async function runServer(request, resp) {
     var u = url.parse(request.url, true);
     var path = u.pathname;
