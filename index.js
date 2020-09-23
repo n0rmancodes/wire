@@ -245,7 +245,17 @@ async function runServer(request, resp) {
         if (path_parsed[2]) {
             try {
                 var ur = Buffer.from(path_parsed[2], "base64").toString("utf-8");
-                var d = got.stream(ur).on("close", function() {
+                var u = url.parse(ur, true);
+                var d = got.stream(ur, {
+                    headers: {
+                        "Host":  u.host,
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36 OPR/70.0.3728.189",
+                        "Accept-Encoding": "identity;q=1, *;q=0",
+                        "Accept":" */*",
+                        "Sec-Fetch-Site": "cross-site",
+                        "Referer": "https://www.tiktok.com/foryou"
+                    }
+                }).on("close", function() {
                     resp.end();
                 }).on("error", function(e) {
                     resp.end();
