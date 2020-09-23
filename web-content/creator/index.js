@@ -28,6 +28,7 @@ function load() {
         } else {
             document.getElementById("load").style.display = "none";
             document.getElementById("err").style.display = "";
+            document.getElementById("errTxt").innerHTML = json.err;
         }
     }
 }
