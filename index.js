@@ -46,24 +46,81 @@ async function runServer(request, resp) {
                 resp.end(d);
             }
         } else if (path_parsed[2] == "trending") {
-            try {
-                var posts = await TikTokScraper.trend('', { number: 50 });
-                posts = JSON.stringify(posts);
-                resp.writeHead(200, {
-                    "Content-Type": "application/json",
-					"Access-Control-Allow-Origin": "*"
-                })
-                resp.end(posts);
-            } catch (error) {
-                console.log(error)
-                var d = JSON.stringify({
-                    "err": error
-                });
-                resp.writeHead(404, {
-                    "Content-Type": "application/json",
-					"Access-Control-Allow-Origin": "*"
-                })
-                resp.end(d);
+            if (!fs.existsSync("./cache/trending.json")) {
+                try {
+                    var posts = await TikTokScraper.trend('', { number: 50 });
+                    var da = (Date.now() / 1000);
+                    var exp = da + 3600;
+                    var d = {
+                        "data": posts,
+                        "exp": exp
+                    }
+                    if (!fs.existsSync("./cache/")) {
+                        fs.mkdirSync("./cache/");
+                    }
+                    if (posts.collector[0]) {
+                        fs.writeFileSync("./cache/trending.json", JSON.stringify(d));
+                    }
+                    posts = JSON.stringify(posts);
+                    resp.writeHead(200, {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    })
+                    resp.end(posts);
+                } catch (error) {
+                    console.log(error)
+                    var d = JSON.stringify({
+                        "err": error
+                    });
+                    resp.writeHead(404, {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    })
+                    resp.end(d);
+                }
+            } else {
+                var json = JSON.parse(fs.readFileSync("./cache/trending.json"));
+                var da = (Date.now() / 1000);
+                if (json.exp < da) {
+                    try {
+                        var posts = await TikTokScraper.trend('', { number: 50 });
+                        var da = (Date.now() / 1000);
+                        var exp = da + 3600;
+                        var d = {
+                            "data": posts,
+                            "exp": exp
+                        }
+                        if (!fs.existsSync("./cache/")) {
+                            fs.mkdirSync("./cache/");
+                        }
+                        if (posts.collector[0]) {
+                            fs.writeFileSync("./cache/trending.json", JSON.stringify(d));
+                        }
+                        posts = JSON.stringify(posts);
+                        resp.writeHead(200, {
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*"
+                        })
+                        resp.end(posts);
+                    } catch (error) {
+                        console.log(error)
+                        var d = JSON.stringify({
+                            "err": error
+                        });
+                        resp.writeHead(404, {
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*"
+                        })
+                        resp.end(d);
+                    }
+                } else {
+                    var d = JSON.stringify(json.data);
+                    resp.writeHead(200, {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    })
+                    resp.end(d);
+                }
             }
         } else if (path_parsed[2] == "tag") {
             try {
