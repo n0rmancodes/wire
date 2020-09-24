@@ -1,11 +1,19 @@
 load();
 
-function load() {
+function load(r) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/api/trending");
     xhr.send();
     xhr.onload = function () {
         var json = JSON.parse(xhr.responseText);
+        if (!json.collector[0] && !r) {
+            load("y");
+        } else if (!json.collector[0] && r) {
+            document.getElementById("error").style.display = "";
+            document.getElementById("loadr").style.display = "none";
+        } else if (json.collector[0]){
+            document.getElementById("loadr").style.display = "none";
+        }
         for (var c in json.collector) {
             var link = document.createElement("A");
             link.href = json.collector[c].webVideoUrl.split("https://www.tiktok.com/")[1];

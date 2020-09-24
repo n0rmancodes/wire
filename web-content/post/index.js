@@ -1,6 +1,6 @@
 load();
 
-function load() {
+function load(r) {
     var xhr = new XMLHttpRequest();
     var url = "https://www.tiktok.com/@" + window.location.href.split("/@")[1]
     console.log(url)
@@ -41,10 +41,12 @@ function load() {
             document.getElementById("sh").innerHTML = json.shareCount.toLocaleString();
             document.getElementById("content").innerHTML = json.text;
             document.title = json.text + " | WireTick";
-        } else {
+        } else if (r) {
             document.getElementById("err").style.display = "";
             document.getElementById("load").style.display = "none";
             document.getElementById("errTxt").innerHTML = json.err;
+        } else {
+            load("y");
         }
     }
 }
