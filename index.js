@@ -47,7 +47,7 @@ async function runServer(request, resp) {
             }
         } else if (path_parsed[2] == "trending") {
             try {
-                var posts = await TikTokScraper.trend('', { number: 100 });
+                var posts = await TikTokScraper.trend('', { number: 50 });
                 posts = JSON.stringify(posts);
                 resp.writeHead(200, {
                     "Content-Type": "application/json",
