@@ -302,10 +302,14 @@ async function runServer(request, resp) {
     } else if (path_parsed[1] == "proxy") {
         if (path_parsed[2]) {
             try {
-                var ur = Buffer.from(path_parsed[2], "base64").toString("utf-8");
+                var a = "";
+                for (var c in path_parsed.slice(2)) {
+                    if (c == 0) {var a = path_parsed.slice(2)[c];} else {var a = a + "/" + path_parsed.slice(2)[c]}
+                }
+                var ur = Buffer.from(a, "base64").toString("utf-8");
                 var u = url.parse(ur, true);
-                var d = got.stream(ur, {
-                    headers: {
+                if (u.query.mime_type) {
+                    var h = {
                         "Host":  u.host,
                         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36 OPR/70.0.3728.189",
                         "Accept-Encoding": "identity;q=1, *;q=0",
@@ -313,10 +317,18 @@ async function runServer(request, resp) {
                         "Sec-Fetch-Site": "cross-site",
                         "Referer": "https://www.tiktok.com/foryou"
                     }
+                } else {
+                    var h = {
+                        "Host":  u.host,
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36 OPR/70.0.3728.189"
+                    }
+                }
+                var d = got.stream(ur, {
+                    headers: h
                 }).on("close", function() {
                     resp.end();
                 }).on("error", function(e) {
-                    resp.end();
+                    resp.end(e.response.body);
                 })
                 d.pipe(resp)
             } catch (error) {
