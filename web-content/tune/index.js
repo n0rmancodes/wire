@@ -1,7 +1,8 @@
 load();
 
 function load() {
-    var id = window.location.pathname.split("/tune/")[1].split("/")[0]
+    var id = window.location.pathname.split("-")[window.location.pathname.split("-").length - 1];
+    console.log(id)
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/api/tune/" + id);
     xhr.send();

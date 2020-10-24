@@ -258,7 +258,7 @@ async function runServer(request, resp) {
                 resp.end(res);
             }
         })
-    } else if (path_parsed[1] == "tune") {
+    } else if (path_parsed[1] == "music") {
         if (!path_parsed[2]) {
             fs.readFile("./error/404.html", function(err, res) {
                 if (err) {
