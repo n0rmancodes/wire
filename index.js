@@ -258,6 +258,28 @@ async function runServer(request, resp) {
                 resp.end(res);
             }
         })
+    } else if (path_parsed[1] == "music") {
+        if (!path_parsed[2]) {
+            fs.readFile("./error/404.html", function(err, res) {
+                if (err) {
+                    resp.end("see console for errors");
+                    console.log("incomplete installation has occured.")
+                } else {
+                    resp.writeHead(404, {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "text/html"
+                    })
+                    resp.end(res);
+                }
+            })
+        } else {
+            var id = path_parsed[2].toString().split("-")[path_parsed[2].toString().split("-").length - 1];
+            var redirPath = "/tune/" + id
+            resp.writeHead(302, {
+                "Location": redirPath
+            })
+            resp.end();
+        }
     } else if (path_parsed[1] == "tune") {
         if (!path_parsed[2]) {
             fs.readFile("./error/404.html", function(err, res) {
