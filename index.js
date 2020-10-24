@@ -3,7 +3,12 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const got = require("got");
-http.createServer(runServer).listen(process.env.PORT || 3010);
+if (!fs.existsSync("./config.json")) {
+    console.log("[WARN] 'config.json' does not exist! copying 'config.example.json' to fix this!")
+    fs.copyFileSync("config.example.json", "config.json")
+}
+const config = JSON.parse(fs.readFileSync("./config.json")); 
+http.createServer(runServer).listen(process.env.PORT || config.port);
 console.log("- wiretick is running!");
 async function runServer(request, resp) {
     var u = url.parse(request.url, true);
@@ -35,7 +40,6 @@ async function runServer(request, resp) {
                 })
                 resp.end(d);
             } catch (error) {
-                console.log(error)
                 var d = JSON.stringify({
                     "err": error
                 });
@@ -46,81 +50,23 @@ async function runServer(request, resp) {
                 resp.end(d);
             }
         } else if (path_parsed[2] == "trending") {
-            if (!fs.existsSync("./cache/trending.json")) {
-                try {
-                    var posts = await TikTokScraper.trend('', { number: 50 });
-                    var da = (Date.now() / 1000);
-                    var exp = da + 3600;
-                    var d = {
-                        "data": posts,
-                        "exp": exp
-                    }
-                    if (!fs.existsSync("./cache/")) {
-                        fs.mkdirSync("./cache/");
-                    }
-                    if (posts.collector[0]) {
-                        fs.writeFileSync("./cache/trending.json", JSON.stringify(d));
-                    }
-                    posts = JSON.stringify(posts);
-                    resp.writeHead(200, {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*"
-                    })
-                    resp.end(posts);
-                } catch (error) {
-                    console.log(error)
-                    var d = JSON.stringify({
-                        "err": error
-                    });
-                    resp.writeHead(404, {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*"
-                    })
-                    resp.end(d);
-                }
-            } else {
-                var json = JSON.parse(fs.readFileSync("./cache/trending.json"));
-                var da = (Date.now() / 1000);
-                if (json.exp < da) {
-                    try {
-                        var posts = await TikTokScraper.trend('', { number: 50 });
-                        var da = (Date.now() / 1000);
-                        var exp = da + 3600;
-                        var d = {
-                            "data": posts,
-                            "exp": exp
-                        }
-                        if (!fs.existsSync("./cache/")) {
-                            fs.mkdirSync("./cache/");
-                        }
-                        if (posts.collector[0]) {
-                            fs.writeFileSync("./cache/trending.json", JSON.stringify(d));
-                        }
-                        posts = JSON.stringify(posts);
-                        resp.writeHead(200, {
-                            "Content-Type": "application/json",
-                            "Access-Control-Allow-Origin": "*"
-                        })
-                        resp.end(posts);
-                    } catch (error) {
-                        console.log(error)
-                        var d = JSON.stringify({
-                            "err": error
-                        });
-                        resp.writeHead(404, {
-                            "Content-Type": "application/json",
-                            "Access-Control-Allow-Origin": "*"
-                        })
-                        resp.end(d);
-                    }
-                } else {
-                    var d = JSON.stringify(json.data);
-                    resp.writeHead(200, {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*"
-                    })
-                    resp.end(d);
-                }
+            try {
+                var posts = await TikTokScraper.trend('', { number: 50 });
+                posts = JSON.stringify(posts);
+                resp.writeHead(200, {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                })
+                resp.end(posts);
+            } catch (error) {
+                var d = JSON.stringify({
+                    "err": error
+                });
+                resp.writeHead(404, {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                })
+                resp.end(d);
             }
         } else if (path_parsed[2] == "tag") {
             try {
@@ -145,7 +91,6 @@ async function runServer(request, resp) {
                 })
                 resp.end(d);
             } catch (error) {
-                console.log(error)
                 var d = JSON.stringify({
                     "err": error
                 });
@@ -176,7 +121,6 @@ async function runServer(request, resp) {
                     resp.end(d);
                 }
             } catch (error) {
-                console.log(error)
                 var d = JSON.stringify({
                     "err": error
                 });
@@ -212,7 +156,6 @@ async function runServer(request, resp) {
                     resp.end(d);
                 }
             } catch (error) {
-                console.log(error)
                 var d = JSON.stringify({
                     "err": error
                 });

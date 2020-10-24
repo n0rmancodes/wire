@@ -73,7 +73,7 @@ a {
     }
 }
 
-@media (min-width:915px) {
+@media (min-width:958px) {
     #sidebar {
         width:300px;
         float:left;
@@ -176,7 +176,7 @@ a {
     }
 }
 
-@media (max-width:915px) {
+@media (max-width:958px) {
     #sidebar {
         text-align:center;
     }
