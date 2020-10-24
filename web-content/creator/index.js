@@ -10,12 +10,12 @@ function load() {
         if (!json.err) {
             document.getElementById("load").style.display = "none";
             document.getElementById("profile").style.display = "";
-            document.getElementById("authName").innerHTML = json.user.uniqueId;
-            document.getElementById("videoCount").innerHTML = parseInt(json.user.video).toLocaleString();
-            document.getElementById("followerCount").innerHTML = parseInt(json.user.fans).toLocaleString();
-            document.getElementById("followingCount").innerHTML = parseInt(json.user.following).toLocaleString();
-            document.getElementById("totalLikes").innerHTML = parseInt(json.user.heart).toLocaleString();
-            document.getElementById("authPfp").src = "/proxy/" + btoa(json.user.coversMedium[0]);
+            document.getElementById("authName").innerHTML = json.user.user.uniqueId;
+            document.getElementById("videoCount").innerHTML = json.user.stats.videoCount.toLocaleString();
+            document.getElementById("followerCount").innerHTML = json.user.stats.followerCount.toLocaleString();
+            document.getElementById("followingCount").innerHTML = json.user.stats.followingCount.toLocaleString();
+            document.getElementById("totalLikes").innerHTML = json.user.stats.heartCount.toLocaleString();
+            document.getElementById("authPfp").src = "/proxy/" + btoa(json.user.user.avatarMedium);
             document.title = json.user.uniqueId + " | WireTick";
             for (var c in json.video.collector) {
                 var link = document.createElement("A");
