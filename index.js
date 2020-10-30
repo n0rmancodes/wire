@@ -221,16 +221,35 @@ async function runServer(request, resp) {
             }
         })
     } else if (path_parsed[1].substring(0, 1) == "@") {
-        fs.readFile("./web-content/creator/index.html", function(err,res) {
+        fs.readFile("./web-content/creator/index.html", async function(err,res) {
             if (err) {
                 resp.end("see console for errors");
                 console.log("incomplete installation has occured.")
             } else {
+                var $ = cheerio.load(res);
+                try {
+                    var user = await TikTokScraper.getUserProfileInfo(path.substring(2));
+                    var video = await TikTokScraper.user(path.substring(2), {number: 100});
+                    $("#authName").text(user.user.uniqueId);
+                    $("#videoCount").text(user.stats.videoCount.toLocaleString());
+                    $("#followerCount").text(user.stats.followerCount.toLocaleString());
+                    $("#followingCount").text(user.stats.followingCount.toLocaleString());
+                    $("#totalLikes").text(user.stats.heartCount.toLocaleString());
+                    $("#authPfp").attr("src", "/proxy/" + btoa(user.user.avatarMedium));
+                    for (var c in video.collector) {
+                        var elem = "<a href='" + video.collector[c].webVideoUrl.split("https://www.tiktok.com")[1] + "'><img src='/proxy/" + btoa(video.collector[c].covers.origin) + "'></a>";
+                        $("#feed").append(elem);
+                    }
+                } catch (error) {
+                    $("#err").attr("style", "");
+                    $("#profile").attr("style", "display:none;");
+                    $("#errTxt").text(error);
+                }
                 resp.writeHead(200, {
                     "Access-Control-Allow-Origin": "*",
                     "Content-Type": "text/html"
                 })
-                resp.end(res);
+                resp.end($.html());
             }
         })
     } else if (path_parsed[1] == "music") {
