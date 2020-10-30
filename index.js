@@ -104,7 +104,6 @@ async function runServer(request, resp) {
             try {
                 if (param.url) {
                     var videoMeta = await TikTokScraper.getVideoMeta(param.url);
-                    console.log(videoMeta.headers)
                     if (videoMeta.collector[0]) { var videoMeta = {
                         "meta": videoMeta.collector[0],
                         "cookie": videoMeta.headers["Cookie"]
