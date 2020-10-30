@@ -3,6 +3,7 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const got = require("got");
+const cheerio = require("cheerio");
 if (!fs.existsSync("./config.json")) {
     console.log("[WARN] 'config.json' does not exist! copying 'config.example.json' to fix this!")
     fs.copyFileSync("config.example.json", "config.json")
@@ -180,16 +181,43 @@ async function runServer(request, resp) {
             resp.end(d);
         }
     } else if (path_parsed[1].substring(0, 1) == "@" && path_parsed[2] == "video") {
-        fs.readFile("./web-content/post/index.html", function(err,res) {
+        fs.readFile("./web-content/post/index.html", async function(err,res) {
             if (err) {
                 resp.end("see console for errors");
                 console.log("incomplete installation has occured.")
             } else {
-                resp.writeHead(200, {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "text/html"
-                })
-                resp.end(res);
+                var $ = cheerio.load(res);
+                try {
+                    var videoMeta = await TikTokScraper.getVideoMeta("https://www.tiktok.com" + path);
+                    var img = "/proxy/" + btoa(videoMeta.collector[0].imageUrl) + "?cookie=" + btoa(videoMeta.headers["Cookie"]);
+                    var vid = "/proxy/" + btoa(videoMeta.collector[0].videoUrl) + "?cookie=" + btoa(videoMeta.headers["Cookie"]);
+                    $("#authLink").attr("href", "/@" + videoMeta.collector[0].authorMeta.name);
+                    $("#auth").text(videoMeta.collector[0].authorMeta.name);
+                    $("#musiLink").attr("href", "/tune/" + videoMeta.collector[0].musicMeta.musicId);
+                    $("#musi").text(videoMeta.collector[0].musicMeta.musicName + " - " + videoMeta.collector[0].musicMeta.musicAuthor);
+                    $("#li").text(videoMeta.collector[0].diggCount.toLocaleString());
+                    $("#vi").text(videoMeta.collector[0].playCount.toLocaleString());
+                    $("#sh").text(videoMeta.collector[0].shareCount.toLocaleString());
+                    $("#content").text(videoMeta.collector[0].text);
+                    $("title").text(videoMeta.collector[0].text + " | WireTick");
+                    $("video").attr("poster", img);
+                    $("video").attr("src", vid);
+                    resp.writeHead(200, {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "text/html"
+                    })
+                    resp.end($.html());
+                } catch (error) {
+                    $("#err").attr("style", "");
+                    $("#page").attr("style", "display:none;");
+                    $("#errTxt").text(error);
+                    resp.writeHead(200, {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "text/html"
+                    })
+                    resp.end($.html());
+                }
+                
             }
         })
     } else if (path_parsed[1].substring(0, 1) == "@") {
@@ -293,7 +321,7 @@ async function runServer(request, resp) {
                 }).on("close", function() {
                     resp.end();
                 }).on("error", function(e) {
-                    resp.end(e.response.body);
+                    resp.end();
                 })
                 d.pipe(resp)
             } catch (error) {
@@ -389,4 +417,14 @@ async function runServer(request, resp) {
             }
         })
     }
+}
+
+function btoa(a) {
+    // Encode in Base64
+    return Buffer.from(a, "utf-8").toString("base64");
+}
+
+function atob(a) {
+    // Decode in Base64
+    return Buffer.from(a, "base64").toString("utf-8");
 }
