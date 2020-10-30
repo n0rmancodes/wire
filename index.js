@@ -302,16 +302,38 @@ async function runServer(request, resp) {
                 }
             })
         } else {
-            fs.readFile("./web-content/tune/index.html", function(err,res) {
+            fs.readFile("./web-content/tune/index.html", async function(err,res) {
                 if (err) {
                     resp.end("see console for errors");
                     console.log("incomplete installation has occured.");
                 } else {
+                    var $ = cheerio.load(res);
+                    try {
+                        var id = path.split("/tune/")[1].split("/")[0]
+                        var music = await TikTokScraper.music(id, {number: 100});
+                        if (music.collector[0]) {
+                            var musicInfo = music.collector[0].musicMeta;
+                        } else {
+                            var musicInfo = {};
+                        }
+                        $("#title").text(musicInfo.musicName);
+                        $("title").text(musicInfo.musicName + " | WireTick")
+                        $("#authorName").text(musicInfo.musicAuthor);
+                        $("#cover").attr("src", "/proxy/" + btoa(musicInfo.coverMedium))
+                        for (var c in music.collector) {
+                            var elem = "<a href='" + music.collector[c].webVideoUrl.split("https://www.tiktok.com")[1] + "'><img src='/proxy/" + btoa(music.collector[c].covers.origin) + "'></a>";
+                            $("#feed").append(elem);
+                        }
+                    } catch (error) {
+                        $("#err").attr("style", "");
+                        $("#profile").attr("style", "display:none;");
+                        $("#errTxt").text(error);
+                    }
                     resp.writeHead(200, {
                         "Access-Control-Allow-Origin": "*",
                         "Content-Type": "text/html"
                     })
-                    resp.end(res);
+                    resp.end($.html());
                 }
             })
         }

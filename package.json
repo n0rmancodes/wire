@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/n0rmancodes/wire.git"
+    "url": "git+https://github.com/normanlol/wiretick.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/n0rmancodes/wire/issues"
+    "url": "https://github.com/normanlol/wiretick/issues"
   },
-  "homepage": "https://github.com/n0rmancodes/wire#readme",
+  "homepage": "https://github.com/normanlol/wire#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "got": "^11.8.0",
