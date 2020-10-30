@@ -11,12 +11,12 @@ function load(r) {
         if (!json.err) {
             document.getElementById("load").style.display = "none";
             document.getElementById("page").style.display = "";
-            document.getElementById("player").poster = "/proxy/" + btoa(json.imageUrl);
-            document.getElementById("player").src = "/proxy/" + btoa(json.videoUrl);
-            document.getElementById("authLink").href = "/@" + json.authorMeta.name;
-            document.getElementById("auth").innerHTML = json.authorMeta.name;
-            document.getElementById("musiLink").href = "/tune/" + json.musicMeta.musicId;
-            document.getElementById("musi").innerHTML = json.musicMeta.musicName + " - " + json.musicMeta.musicAuthor;
+            document.getElementById("player").poster = "/proxy/" + btoa(json.imageUrl) + "?cookie=" + btoa(json.cookie);
+            document.getElementById("player").src = "/proxy/" + btoa(json.meta.videoUrl) + "?cookie=" + btoa(json.cookie);
+            document.getElementById("authLink").href = "/@" + json.meta.authorMeta.name;
+            document.getElementById("auth").innerHTML = json.meta.authorMeta.name;
+            document.getElementById("musiLink").href = "/tune/" + json.meta.musicMeta.musicId;
+            document.getElementById("musi").innerHTML = json.meta.musicMeta.musicName + " - " + json.meta.musicMeta.musicAuthor;
             var d = new Date(parseInt(json.createTime) * 1000);
             var month = d.getMonth();
             var day = d.getDate();
@@ -36,10 +36,10 @@ function load(r) {
             if (d.getSeconds().toString().length == 1) {var sec = "0" + d.getSeconds();} else {var sec = d.getSeconds();}
             if (d.getMinutes().toString().length == 1) {var min = "0" + d.getMinutes();} else {var min = d.getMinutes();}
             document.getElementById("pub").innerHTML = month + "/" + day + "/" + year + " at " + hour + ":" + min + ":" + sec + ap;
-            document.getElementById("vi").innerHTML = json.playCount.toLocaleString();
-            document.getElementById("li").innerHTML = json.diggCount.toLocaleString();
-            document.getElementById("sh").innerHTML = json.shareCount.toLocaleString();
-            document.getElementById("content").innerHTML = json.text;
+            document.getElementById("vi").innerHTML = json.meta.playCount.toLocaleString();
+            document.getElementById("li").innerHTML = json.meta.diggCount.toLocaleString();
+            document.getElementById("sh").innerHTML = json.meta.shareCount.toLocaleString();
+            document.getElementById("content").innerHTML = json.meta.text;
             document.title = json.text + " | WireTick";
         } else if (r) {
             document.getElementById("err").style.display = "";

@@ -104,6 +104,11 @@ async function runServer(request, resp) {
             try {
                 if (param.url) {
                     var videoMeta = await TikTokScraper.getVideoMeta(param.url);
+                    console.log(videoMeta.headers)
+                    if (videoMeta.collector[0]) { var videoMeta = {
+                        "meta": videoMeta.collector[0],
+                        "cookie": videoMeta.headers["Cookie"]
+                    }} 
                     videoMeta = JSON.stringify(videoMeta);
                     resp.writeHead(200, {
                         "Content-Type": "application/json",
@@ -272,20 +277,16 @@ async function runServer(request, resp) {
                     if (c == 0) {var a = path_parsed.slice(2)[c];} else {var a = a + "/" + path_parsed.slice(2)[c]}
                 }
                 var ur = Buffer.from(a, "base64").toString("utf-8");
-                var u = url.parse(ur, true);
-                if (u.query.mime_type) {
+                if (param.cookie) {
                     var h = {
-                        "Host":  u.host,
-                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36 OPR/70.0.3728.189",
-                        "Accept-Encoding": "identity;q=1, *;q=0",
-                        "Accept":" */*",
-                        "Sec-Fetch-Site": "cross-site",
-                        "Referer": "https://www.tiktok.com/foryou"
+                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.80 Safari/537.36',
+                        Referer: 'https://www.tiktok.com/',
+                        Cookie: Buffer.from(param.cookie, "base64").toString("utf-8")
                     }
                 } else {
                     var h = {
-                        "Host":  u.host,
-                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36 OPR/70.0.3728.189"
+                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.80 Safari/537.36',
+                        Referer: 'https://www.tiktok.com/'
                     }
                 }
                 var d = got.stream(ur, {
