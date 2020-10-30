@@ -384,7 +384,58 @@ async function runServer(request, resp) {
             })
             resp.end("must have url");
         }
-        
+    } else if (path == "/") {
+        fs.readFile("./web-content/index.html", async function (err, res) {
+            if (err) {
+                resp.end("see console for errors");
+                console.log("incomplete installation has occured.");
+            } else {
+                var $ = cheerio.load(res);
+                try {
+                    var posts = await TikTokScraper.trend('', { number: 50 });
+                    for (var c in posts.collector) {
+                        var auth = "<h2><span class='material-icons'>person</span> " + posts.collector[c].authorMeta.name +"</h2>";
+                        var mus = "<h2><span class='material-icons'>headset</span> " + posts.collector[c].musicMeta.musicName +"</h2>";
+                        var d = new Date(posts.collector[c].createTime * 1000);
+                        var month = d.getMonth();
+                        var day = d.getDate();
+                        var year = d.getFullYear();
+                        if (d.getHours() >= 13) {
+                            var ap = "pm";
+                            var hour = d.getHours() - 12;
+                        } else {
+                            if (d.getHours == 0) {
+                                var hour = 12; 
+                                var ap = "am"
+                            } else {
+                                var ap = "am";
+                                var hour = d.getHours();
+                            }
+                        }
+                        if (d.getSeconds().toString().length == 1) {var sec = "0" + d.getSeconds();} else {var sec = d.getSeconds();}
+                        if (d.getMinutes().toString().length == 1) {var min = "0" + d.getMinutes();} else {var min = d.getMinutes();}
+                        var str =  month + "/" + day + "/" + year + " at " + hour + ":" + min + ":" + sec + ap;
+                        var post = "<h2><span class='material-icons'>date_range</span> posted on " + str +"</h2>";
+                        var views = "<h2><span class='material-icons'>visibility</span> " + posts.collector[c].playCount.toLocaleString() + " views</h2>";
+                        var likes = "<h2><span class='material-icons'>thumb_up</span> " + posts.collector[c].diggCount.toLocaleString() + " likes</h2>";
+                        var shar = "<h2><span class='material-icons'>reply</span> " + posts.collector[c].shareCount.toLocaleString() + " shares</h2>";
+                        var p = "<p>" + posts.collector[c].text + "</p>"
+                        var inf = auth + mus + post + views + likes + shar + p;
+                        var chip = "<a href='" + posts.collector[c].webVideoUrl.split("https://www.tiktok.com")[1] + "'><div><img src='/proxy/" + btoa(posts.collector[c].covers.dynamic) + "'><div class='infoBox'>" + inf + "</div></div></a>"
+                        $("#feed").append(chip)
+                    }
+                } catch (error) {
+                    $("#err").attr("style", "");
+                    $("#home").attr("style", "display:none");
+                    $("#errTxt").text(error);
+                }
+                resp.writeHead(200, {
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": "text/html"
+                })
+                resp.end($.html());
+            }
+        })
     } else {
         fs.readFile("./web-content/" + path, function(err, res) {
             if (err) {

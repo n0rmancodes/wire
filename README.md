@@ -4,6 +4,7 @@ WireTick is a extremely simple, privacy friendly client of TikTok on the web.
 [Official Instance](https://wiretick.me) - *provided by [electrohaxz.tk](https://host.electrohaxz.tk)*
 ## Features 
 - No advertisements and no client data reaches TikTok's servers.
+- No client side JS.
 - Mobile support.
 - Extremely lightweight.
 - Heroku compatible.
