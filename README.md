@@ -12,7 +12,7 @@ WireTick is a extremely simple, privacy friendly client of TikTok on the web.
 
 ## Roadmap
 - A way to search.
-- Have a (client) Javascript-less version.
+- ~~Have a (client) Javascript-less version.~~ *Achieved on October 30, 2020*
 - Bookmarking specific TikToks.
 - Tags/usernames in descriptions become linkable.
 - Better documentation.
