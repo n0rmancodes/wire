@@ -102,6 +102,10 @@ This gets the trending page in your area.
 *This example was shortened to prevent the size from getting too big to scroll through easily. You can use the link below if you'd like to see a live example.*
 ```json
 {
+  "headers":{
+      "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.80 Safari/537.36",
+      "Referer":"https://www.tiktok.com/","Cookie":"tt_webid_v2=686169490967842828"
+  },
   "collector": [
     {
       "id": "6882425748389514502",
@@ -196,6 +200,7 @@ This gets a hashtag's metadata and posts within the hashtag.
 *This example was shortened to prevent the size from getting too big to scroll through easily. You can use the link below if you'd like to see a live example.*
 ```json
 {
+
   "hashtag": {
     "challenge": {
       "id": "229207",
@@ -291,65 +296,65 @@ The headers have to fit a specific critera in order to be recieved correctly. Th
 Below are the headers the proxy uses to retrieve videos.
 
 ```
-"Host":  [URL Hostname],
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36 OPR/70.0.3728.189",
-"Accept-Encoding": "identity;q=1, *;q=0",
-"Accept":" */*",
-"Sec-Fetch-Site": "cross-site",
-"Referer": "https://www.tiktok.com/foryou"
+"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.80 Safari/537.36",
+"Referer": "https://www.tiktok.com/",
+"Cookie": [Cookie found in JSON response (json.cookie)]
 ```
 
 This does not make it foolproof. The proxy could stop working at any time.
 ### Example Body
 ```json
 {
-  "id": "6886892080350629125",
-  "text": "is this worth posting, i can’t tell",
-  "createTime": 1603479563,
-  "authorMeta": {
-    "id": "6619407237554651142",
-    "secUid": "MS4wLjABAAAAssSVm9mYJdUv9OBAaOK-_cjOlVFqCl62vn_95G6a_NJVM693IvxpcIfOU7wqRWpW",
-    "name": "kierapleaze",
-    "nickName": "Kiera Please",
-    "following": 44,
-    "fans": 470700,
-    "heart": 7100000,
-    "video": 113,
-    "digg": 1989,
-    "verified": false,
-    "private": false,
-    "signature": "I am alive .. i think 🐛🦋 💫\nig, twitter, youtube, my soul: kieraplease",
-    "avatar": "https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/651777e25d4eaeed90ea61be4243aaf3~c5_1080x1080.jpeg?x-expires=1603598400&x-signature=Qfyb3oNLHJUVYUlTHKz3LQx0WXs%3D"
+  "meta": {
+    "id": "6886892080350629125",
+    "text": "is this worth posting, i can’t tell",
+    "createTime": 1603479563,
+    "authorMeta": {
+      "id": "6619407237554651142",
+      "secUid": "MS4wLjABAAAAssSVm9mYJdUv9OBAaOK-_cjOlVFqCl62vn_95G6a_NJVM693IvxpcIfOU7wqRWpW",
+      "name": "kierapleaze",
+      "nickName": "Kiera Please",
+      "following": 44,
+      "fans": 470700,
+      "heart": 7100000,
+      "video": 113,
+      "digg": 1989,
+      "verified": false,
+      "private": false,
+      "signature": "I am alive .. i think 🐛🦋 💫\nig, twitter, youtube, my soul: kieraplease",
+      "avatar": "https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/651777e25d4eaeed90ea61be4243aaf3~c5_1080x1080.jpeg?x-expires=1603598400&x-signature=Qfyb3oNLHJUVYUlTHKz3LQx0WXs%3D"
+    },
+    "musicMeta": {
+      "musicId": "6886891493907335942",
+      "musicName": "Funny Thing Thundercat",
+      "musicAuthor": "Kiera Please",
+      "musicOriginal": true,
+      "coverThumb": "https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/651777e25d4eaeed90ea61be4243aaf3~c5_100x100.jpeg?x-expires=1603598400&x-signature=ZBPzqlH88xCfuVM9PkIvm1pX2Mo%3D",
+      "coverMedium": "https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/651777e25d4eaeed90ea61be4243aaf3~c5_720x720.jpeg?x-expires=1603598400&x-signature=S5rn%2Ftq%2BVa2RV1IdnRsUK%2FKGKDw%3D",
+      "coverLarge": "https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/651777e25d4eaeed90ea61be4243aaf3~c5_1080x1080.jpeg?x-expires=1603598400&x-signature=Qfyb3oNLHJUVYUlTHKz3LQx0WXs%3D"
+    },
+    "imageUrl": "https://p16-sign-va.tiktokcdn.com/obj/tos-maliva-p-0068/76fbdfff364042a08ab87d22954557e3?x-expires=1603533600&x-signature=GkTF%2B0GLCskNr6oEay%2Fq1rnPBbY%3D",
+    "videoUrl": "https://v16-web-newkey.tiktokcdn.com/2c751c45506ecb0541ebd8ee23d633b6/5f93fe5c/video/tos/useast2a/tos-useast2a-ve-0068c002/d8116e63aaf5405facc86a862bc2145a/?a=1988&br=3182&bt=1591&cr=0&cs=0&cv=1&dr=0&ds=3&er=&l=202010240413330101880322230C115845&lr=tiktok_m&mime_type=video_mp4&qs=0&rc=anl4d25sOzNseDMzZjczM0ApNzZpZThlNzs0NzU1NzpmM2dpZmcvZXAwZDZfLS0wMTZzc2AwMjUyYF41YjIvMy41MmI6Yw%3D%3D&vl=&vr=",
+    "videoUrlNoWaterMark": null,
+    "videoMeta": {
+      "width": 576,
+      "height": 1024,
+      "ratio": "720p",
+      "duration": 15
+    },
+    "covers": {
+      "default": "https://p16-sign-va.tiktokcdn.com/obj/tos-maliva-p-0068/76fbdfff364042a08ab87d22954557e3?x-expires=1603533600&x-signature=GkTF%2B0GLCskNr6oEay%2Fq1rnPBbY%3D",
+      "origin": "https://p16-sign-va.tiktokcdn.com/obj/tos-maliva-p-0068/c5b263782d33436fa1479c39c7640a6e_1603479564?x-expires=1603533600&x-signature=4AXPg5wOexz1ytGMfwiPTYU%2F0zw%3D"
+    },
+    "diggCount": 81600,
+    "shareCount": 718,
+    "playCount": 1348,
+    "commentCount": 187300,
+    "downloaded": false,
+    "mentions": [],
+    "hashtags": []
   },
-  "musicMeta": {
-    "musicId": "6886891493907335942",
-    "musicName": "Funny Thing Thundercat",
-    "musicAuthor": "Kiera Please",
-    "musicOriginal": true,
-    "coverThumb": "https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/651777e25d4eaeed90ea61be4243aaf3~c5_100x100.jpeg?x-expires=1603598400&x-signature=ZBPzqlH88xCfuVM9PkIvm1pX2Mo%3D",
-    "coverMedium": "https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/651777e25d4eaeed90ea61be4243aaf3~c5_720x720.jpeg?x-expires=1603598400&x-signature=S5rn%2Ftq%2BVa2RV1IdnRsUK%2FKGKDw%3D",
-    "coverLarge": "https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/651777e25d4eaeed90ea61be4243aaf3~c5_1080x1080.jpeg?x-expires=1603598400&x-signature=Qfyb3oNLHJUVYUlTHKz3LQx0WXs%3D"
-  },
-  "imageUrl": "https://p16-sign-va.tiktokcdn.com/obj/tos-maliva-p-0068/76fbdfff364042a08ab87d22954557e3?x-expires=1603533600&x-signature=GkTF%2B0GLCskNr6oEay%2Fq1rnPBbY%3D",
-  "videoUrl": "https://v16-web-newkey.tiktokcdn.com/2c751c45506ecb0541ebd8ee23d633b6/5f93fe5c/video/tos/useast2a/tos-useast2a-ve-0068c002/d8116e63aaf5405facc86a862bc2145a/?a=1988&br=3182&bt=1591&cr=0&cs=0&cv=1&dr=0&ds=3&er=&l=202010240413330101880322230C115845&lr=tiktok_m&mime_type=video_mp4&qs=0&rc=anl4d25sOzNseDMzZjczM0ApNzZpZThlNzs0NzU1NzpmM2dpZmcvZXAwZDZfLS0wMTZzc2AwMjUyYF41YjIvMy41MmI6Yw%3D%3D&vl=&vr=",
-  "videoUrlNoWaterMark": null,
-  "videoMeta": {
-    "width": 576,
-    "height": 1024,
-    "ratio": "720p",
-    "duration": 15
-  },
-  "covers": {
-    "default": "https://p16-sign-va.tiktokcdn.com/obj/tos-maliva-p-0068/76fbdfff364042a08ab87d22954557e3?x-expires=1603533600&x-signature=GkTF%2B0GLCskNr6oEay%2Fq1rnPBbY%3D",
-    "origin": "https://p16-sign-va.tiktokcdn.com/obj/tos-maliva-p-0068/c5b263782d33436fa1479c39c7640a6e_1603479564?x-expires=1603533600&x-signature=4AXPg5wOexz1ytGMfwiPTYU%2F0zw%3D"
-  },
-  "diggCount": 81600,
-  "shareCount": 718,
-  "playCount": 1348,
-  "commentCount": 187300,
-  "downloaded": false,
-  "mentions": [],
-  "hashtags": []
+  "cookie": "tt_webid_v2=[random string]"
 }
 ```
 [Live Example](https://wiretick.me/api/post?url=https://www.tiktok.com/@kierapleaze/video/6886892080350629125?lang=en)
@@ -362,6 +367,11 @@ Music, or what's more referred to as "sound" metadata is retrieved using this en
 ```json
 {
   "music": {
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.80 Safari/537.36",
+      "Referer": "https://www.tiktok.com/",
+      "Cookie": "tt_webid_v2=686169490967842828"
+    },
     "collector": [
       {
         "id": "6872825393766796549",
