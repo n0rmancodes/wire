@@ -3,6 +3,17 @@ This is documentation for the API used in WireTick. Based on the private API use
 
 Things in ``[brackets]`` are variables and need to be changed yourself.
 
+## Video Downloads/Streaming/etc
+To use the video in the responses in some responses, you have to use specific headers in order for it to work properly.
+
+```
+"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.80 Safari/537.36",
+"Referer": "https://www.tiktok.com/",
+"Cookie": [Cookie found in JSON response (see below)]
+```
+
+This can be either in ``headers.Cookie`` or just ``cookie`` depending on the endpoint you end up using.
+
 ## User Feed
 ### GET ``/api/user/[username]``
 This gets a user's metadata and their most recent posts (100 or less).
@@ -291,15 +302,6 @@ This gets a hashtag's metadata and posts within the hashtag.
 ## Post Metadata and Streaming URLs
 ### GET ``/api/post?url=[url]``
 This gets a TikTok URL's metadata and streaming URL.
-
-The headers have to fit a specific critera in order to be recieved correctly. This is why WireTick's web UI uses a proxy to access videos and such.
-Below are the headers the proxy uses to retrieve videos.
-
-```
-"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.80 Safari/537.36",
-"Referer": "https://www.tiktok.com/",
-"Cookie": [Cookie found in JSON response (json.cookie)]
-```
 
 This does not make it foolproof. The proxy could stop working at any time.
 ### Example Body
