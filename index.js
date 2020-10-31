@@ -236,6 +236,7 @@ async function runServer(request, resp) {
                     $("#followingCount").text(user.stats.followingCount.toLocaleString());
                     $("#totalLikes").text(user.stats.heartCount.toLocaleString());
                     $("#authPfp").attr("src", "/proxy/" + btoa(user.user.avatarMedium));
+                    $("title").text(user.user.uniqueId + " | WireTick");
                     for (var c in video.collector) {
                         var elem = "<a href='" + video.collector[c].webVideoUrl.split("https://www.tiktok.com")[1] + "'><img src='/proxy/" + btoa(video.collector[c].covers.origin) + "'></a>";
                         $("#feed").append(elem);
