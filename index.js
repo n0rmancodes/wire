@@ -348,9 +348,9 @@ async function runServer(request, resp) {
                 var ur = Buffer.from(a, "base64").toString("utf-8");
                 if (param.cookie) {
                     var h = {
-                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.80 Safari/537.36',
-                        Referer: 'https://www.tiktok.com/',
-                        Cookie: Buffer.from(param.cookie, "base64").toString("utf-8")
+                        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.80 Safari/537.36",
+                        "Referer": "https://www.tiktok.com/",
+                        "Cookie": Buffer.from(param.cookie, "base64").toString("utf-8")
                     }
                 } else {
                     var h = {
