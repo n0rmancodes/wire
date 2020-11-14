@@ -8,9 +8,11 @@ if (!fs.existsSync("./config.json")) {
     console.log("[WARN] 'config.json' does not exist! copying 'config.example.json' to fix this!")
     fs.copyFileSync("config.example.json", "config.json")
 }
-const config = JSON.parse(fs.readFileSync("./config.json")); 
-http.createServer(runServer).listen(process.env.PORT || config.port);
-console.log("- wiretick is running!");
+const config = JSON.parse(fs.readFileSync("./config.json"));
+const port = process.env.PORT || config.port;
+http.createServer(runServer).listen(port);
+
+console.log("- wiretick is running! (listening to port " + port + ")");
 async function runServer(request, resp) {
     var u = url.parse(request.url, true);
     var path = u.pathname;
