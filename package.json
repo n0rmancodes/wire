@@ -19,6 +19,6 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "got": "^11.8.0",
-    "tiktok-scraper": "^1.4.3"
+    "tiktok-scraper": "^1.4.4"
   }
 }
