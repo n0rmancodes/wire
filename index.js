@@ -240,7 +240,9 @@ async function runServer(request, resp) {
                     $("#authPfp").attr("src", "/proxy/" + btoa(user.user.avatarMedium));
                     $("title").text(user.user.uniqueId + " | WireTick");
                     for (var c in video.collector) {
-                        var elem = "<a href='" + video.collector[c].webVideoUrl.split("https://www.tiktok.com")[1] + "'><img src='/proxy/" + btoa(video.collector[c].covers.origin) + "'></a>";
+                        var imgsrc = '"/proxy/' + btoa(video.collector[c].covers.origin) + '"';
+                        var dynsrc = '"/proxy/' + btoa(video.collector[c].covers.dynamic) + '"';
+                        var elem = "<a href='" + video.collector[c].webVideoUrl.split("https://www.tiktok.com")[1] + "'><img src=" + imgsrc + " onmouseover='this.src = " + dynsrc +"' onmouseout='this.src = " + imgsrc +"'></a>";
                         $("#feed").append(elem);
                     }
                 } catch (error) {
@@ -324,7 +326,9 @@ async function runServer(request, resp) {
                         $("#authorName").text(musicInfo.musicAuthor);
                         $("#cover").attr("src", "/proxy/" + btoa(musicInfo.coverMedium))
                         for (var c in music.collector) {
-                            var elem = "<a href='" + music.collector[c].webVideoUrl.split("https://www.tiktok.com")[1] + "'><img src='/proxy/" + btoa(music.collector[c].covers.origin) + "'></a>";
+                            var imgsrc = '"/proxy/' + btoa(music.collector[c].covers.origin) + '"';
+                            var dynsrc = '"/proxy/' + btoa(music.collector[c].covers.dynamic) + '"';
+                            var elem = "<a href='" + music.collector[c].webVideoUrl.split("https://www.tiktok.com")[1] + "'><img src=" + imgsrc + " onmouseover='this.src = " + dynsrc +"' onmouseout='this.src = " + imgsrc +"'></a>";
                             $("#feed").append(elem);
                         }
                     } catch (error) {
