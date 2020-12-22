@@ -1,3 +1,8 @@
+# Disclaimer
+This project is temporarily on hold and will not work due to TikTok updating their servers at the worst possible time. 
+
+The official instance is down until further notice.
+
 # WireTick
 WireTick is a extremely simple, privacy friendly client of TikTok on the web.
 
